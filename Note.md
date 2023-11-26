@@ -15,3 +15,7 @@ plugin调用耗时：
 
     1. plugin调用性能差异在8倍多
     2. 带参数和不带参数差异不大
+
+查看so导出
+    objdump -tT hotfix.so
+    nm -D hotfix.so
