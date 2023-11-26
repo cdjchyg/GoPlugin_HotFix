@@ -9,5 +9,9 @@ func (g greeting) Greet(log string) {
 var Greeter greeting
 
 func HotFixPrint(log string) {
-	println(log)
+	// println(log)
+}
+
+func PrintNoParam() {
+	
 }
