@@ -7,13 +7,13 @@ import (
     "GoHotFix/Struct"
 )
 
-func loadDispatchMsg() func(interface{})interface{} {
-    plug, err := plugin.Open("../HotFix/hotfix.so")
+func loadDispatchMsg(path string, funcName string) func(interface{})interface{} {
+    plug, err := plugin.Open(path)
     if err != nil {
         return nil
     }
 
-    symDispatchMsg, err := plug.Lookup("DispatchMsg")
+    symDispatchMsg, err := plug.Lookup(funcName)
     if err != nil {
         return nil
     }
@@ -23,7 +23,7 @@ func loadDispatchMsg() func(interface{})interface{} {
 }
 
 func main() {
-    dispatchMsg := loadDispatchMsg()
+    dispatchMsg := loadDispatchMsg("../HotFix/hotfix.so.1", "DispatchMsg")
 
     pm := player.NewPlayerMgr()
     dispatchMsg(&Struct.SetPlayerMgrReq{PM: pm})
@@ -37,7 +37,8 @@ func main() {
     fmt.Println("reload ===================")
 
     // reload for hot fix
-    dispatchMsg = loadDispatchMsg()
+    dispatchMsg = loadDispatchMsg("../HotFix/hotfix.so.2", "DispatchMsg")
+    dispatchMsg(&Struct.SetPlayerMgrReq{PM: pm})
     ack = dispatchMsg(&Struct.GetPlayerNameReq{PID:1}).(*Struct.GetPlayerNameAck)
     fmt.Println(ack.Name)
 }

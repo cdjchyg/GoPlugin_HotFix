@@ -27,6 +27,7 @@ func DispatchMsg(param interface {}) interface{} {
 	case *Struct.GetPlayerNameReq:
 		req := param.(*Struct.GetPlayerNameReq)
 		p := pm.GetPlayer(req.PID)
+		fmt.Println("updated so code!!!") // 包含生产 hotfix.so.1， 不包含hotfix.so.2
 		return &Struct.GetPlayerNameAck{
 			Name: p.Name,
 			PID: p.PID,
